@@ -78,7 +78,7 @@
 
   <div class="sentence-box">
     <strong>Deliverable Sentence:</strong>
-    The Chrome Sources tab breakpoint paused runtime execution right at the render loop to reveal that the list state variable was <code>null</code> instead of an array; React DevTools inspected the live component tree hierarchy to uncover that <code>inStock</code> was <code>undefined</code> due to a silent prop name typo which produced zero runtime errors in the console; and the DevTools Network tab inspected the HTTP transaction to isolate the <code>404 Not Found</code> and server error payload caused by a mistyped URL endpoint, none of which the standard console alone could pinpoint.
+    I used a breakpoint to catch the null state before <code>.map()</code> crashed the page, React DevTools to find the <code>inStock</code> prop typo that silently broke the badges with zero console errors, and the Network tab to spot the 404 URL typo that the console alone couldn't explain.
   </div>
 
   <div class="section-title">1. Catalog Overview with Shadcn UI Primitives & Typed Badges</div>

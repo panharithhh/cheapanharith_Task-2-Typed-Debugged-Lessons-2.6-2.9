@@ -9,7 +9,7 @@
 ## Executive Summary (Required Deliverable)
 
 > **Which tool caught which bug—and why the console alone was not enough:**  
-> The Chrome Sources tab breakpoint paused runtime right at the render cycle to reveal that the list state variable was `null` instead of an array; React DevTools inspected the live component tree hierarchy to uncover that `inStock` was `undefined` due to a silent prop name typo which triggered zero runtime errors in the console; and the DevTools Network tab inspected the HTTP transaction to isolate the `404 Not Found` and response payload caused by a mistyped URL endpoint, none of which the console log alone could sufficiently diagnose or pinpoint.
+> I used a breakpoint to catch the null state before `.map()` crashed the page, React DevTools to find the `inStock` prop typo that silently broke the badges with zero console errors, and the Network tab to spot the 404 URL typo that the console alone couldn't explain.
 
 ---
 
