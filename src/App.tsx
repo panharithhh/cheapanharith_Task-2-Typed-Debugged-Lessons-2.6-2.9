@@ -87,8 +87,12 @@ const INITIAL_PRODUCTS: Product[] = [
 ]
 
 export default function App(): React.JSX.Element {
-  // Requirement: useState<Product[]> for the list
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS)
+  // =========================================================================
+  // PLANTED BUG 1 (Crash: .map() on null state)
+  // State is set to null, causing an uncaught TypeError during iteration.
+  // Diagnostic Tool: Chrome DevTools Sources Tab Breakpoint.
+  // =========================================================================
+  const [products, setProducts] = useState<Product[]>(null as unknown as Product[])
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [inStockOnly, setInStockOnly] = useState<boolean>(false)
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
@@ -132,11 +136,12 @@ export default function App(): React.JSX.Element {
     setIsLoading(true)
     setNetworkError(null)
 
-    // When Bug 3 is active, use the mistyped URL endpoint (/productss) which yields 404
-    const endpoint =
-      activeBug === 'bug3_network'
-        ? 'https://dummyjson.com/productss?limit=3'
-        : 'https://dummyjson.com/products?limit=3'
+    // =========================================================================
+    // PLANTED BUG 3 (Network Failure: Mistyped URL endpoint)
+    // URL has an extra 's' (/productss), resulting in an HTTP 404 response.
+    // Diagnostic Tool: Chrome DevTools Network Tab.
+    // =========================================================================
+    const endpoint = 'https://dummyjson.com/productss?limit=3'
 
     try {
       const response = await fetch(endpoint)
@@ -315,20 +320,21 @@ export default function App(): React.JSX.Element {
           ) : (
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {publicProducts.map((product) => {
-                // When Bug 2 is active, simulate the silent wrong prop name typo
-                const productWithSimulatedBug: PublicProduct =
-                  activeBug === 'bug2_typo'
-                    ? {
-                        ...product,
-                        // Prop typo simulation: inStock is forced false or omitted
-                        inStock: false,
-                      }
-                    : product
+                // =========================================================================
+                // PLANTED BUG 2 (Silent Wrong Value: Prop Name Typo)
+                // Prop name typo causes inStock to be undefined, silently rendering 'Sold Out'.
+                // Zero errors in console.
+                // Diagnostic Tool: React DevTools (Components Tab).
+                // =========================================================================
+                const corruptedProduct: PublicProduct = {
+                  ...product,
+                  inStock: undefined as unknown as boolean,
+                }
 
                 return (
                   <ProductCard
                     key={product.id}
-                    product={productWithSimulatedBug}
+                    product={corruptedProduct}
                     onDelete={handleDeleteProduct}
                   />
                 )
