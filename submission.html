@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Task 2 Submission</title>
+  <title>Task 2 — Typed & Debugged</title>
   <style>
     @page {
       size: A4 portrait;
@@ -11,18 +11,21 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: #0f172a;
-      line-height: 1.4;
+      line-height: 1.35;
       margin: 0;
       padding: 0;
+      font-size: 11px;
     }
     .banner {
       background: #f8fafc;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 8px 12px;
+      border-radius: 6px;
+      padding: 6px 10px;
       margin-bottom: 8px;
-      font-size: 12px;
-      word-break: break-all;
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .banner a {
       color: #059669;
@@ -31,13 +34,39 @@
     }
     .sentence-box {
       background: #f0fdf4;
-      border: 1px solid #86efac;
-      border-radius: 8px;
-      padding: 8px 12px;
-      margin-bottom: 10px;
+      border-left: 3px solid #059669;
+      border-radius: 4px;
+      padding: 6px 10px;
+      margin-bottom: 8px;
       font-size: 11px;
       color: #14532d;
+    }
+    .journal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .journal-card {
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #ffffff;
+      padding: 6px 8px;
+      font-size: 10px;
       line-height: 1.35;
+    }
+    .journal-card h4 {
+      margin: 0 0 4px 0;
+      font-size: 10.5px;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .journal-card p {
+      margin: 2px 0;
+      color: #334155;
+    }
+    .journal-card strong {
+      color: #0f172a;
     }
     .section-title {
       font-size: 11px;
@@ -49,7 +78,7 @@
     }
     .screenshot-card {
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      border-radius: 6px;
       background: #ffffff;
       padding: 4px;
       margin-bottom: 8px;
@@ -58,7 +87,7 @@
     }
     .screenshot-card img {
       width: 100%;
-      max-height: 260px;
+      max-height: 250px;
       object-fit: contain;
       display: block;
       margin: 0 auto;
@@ -72,8 +101,8 @@
 <body>
 
   <div class="banner">
-    <strong>GitHub Repo:</strong> 
-    <a href="https://github.com/panharithhh/cheapanharith_Task-2-Typed-Debugged-Lessons-2.6-2.9">https://github.com/panharithhh/cheapanharith_Task-2-Typed-Debugged-Lessons-2.6-2.9</a>
+    <div><strong>Student:</strong> Chea Panharith &bull; <strong>Task 2 — Typed & Debugged</strong></div>
+    <div><strong>GitHub:</strong> <a href="https://github.com/panharithhh/cheapanharith_Task-2-Typed-Debugged-Lessons-2.6-2.9">panharithhh/cheapanharith_Task-2-Typed-Debugged-Lessons-2.6-2.9</a></div>
   </div>
 
   <div class="sentence-box">
@@ -81,24 +110,46 @@
     I used a breakpoint to catch the null state before <code>.map()</code> crashed the page, React DevTools to find the <code>inStock</code> prop typo that silently broke the badges with zero console errors, and the Network tab to spot the 404 URL typo that the console alone couldn't explain.
   </div>
 
+  <div class="section-title">Debugging Journal (The 3 Bugs)</div>
+  <div class="journal-grid">
+    <div class="journal-card">
+      <h4>Bug 1: App Crash (.map on null)</h4>
+      <p><strong>Symptom:</strong> Blank screen crash when rendering products.</p>
+      <p><strong>Tool:</strong> Chrome Sources Breakpoint.</p>
+      <p><strong>Showed:</strong> Paused on <code>.map()</code>; Scope pane showed <code>products</code> was <code>null</code>.</p>
+      <p><strong>Fix:</strong> Initialized to <code>[]</code> and added <code>(products ?? []).map(...)</code>.</p>
+    </div>
+
+    <div class="journal-card">
+      <h4>Bug 2: Silent Prop Typo</h4>
+      <p><strong>Symptom:</strong> Cards always said "Sold Out", console had 0 errors.</p>
+      <p><strong>Tool:</strong> React DevTools (Components).</p>
+      <p><strong>Showed:</strong> Prop passed as <code>isAvailable</code> instead of <code>inStock</code> (was <code>undefined</code>).</p>
+      <p><strong>Fix:</strong> Passed <code>inStock={product.inStock}</code> to match props interface.</p>
+    </div>
+
+    <div class="journal-card">
+      <h4>Bug 3: Network 404 Error</h4>
+      <p><strong>Symptom:</strong> Sync API failed with red error alert.</p>
+      <p><strong>Tool:</strong> Chrome Network Tab (Fetch/XHR).</p>
+      <p><strong>Showed:</strong> Red 404 on <code>/productss</code> due to extra 's'. Response: resource not found.</p>
+      <p><strong>Fix:</strong> Corrected endpoint to <code>/products</code> and added <code>response.ok</code> check.</p>
+    </div>
+  </div>
+
   <div class="section-title">1. Catalog Overview with Shadcn UI Primitives & Typed Badges</div>
   <div class="screenshot-card">
     <img src="screenshots/1_catalog_overview.png" alt="Catalog Overview">
   </div>
 
-  <div class="section-title">2. Lesson 2.6–2.9 Debugging Laboratory (3 Planted Bugs Suite)</div>
-  <div class="screenshot-card">
-    <img src="screenshots/2_debugging_lab.png" alt="Debugging Laboratory">
-  </div>
-
   <div class="page-break"></div>
 
-  <div class="section-title" style="margin-top: 6px;">3. Git Commits Split per Requirement</div>
+  <div class="section-title" style="margin-top: 4px;">2. Git Commits Split per Requirement</div>
   <div class="screenshot-card" style="background: #0f172a; border-color: #334155; padding: 6px;">
     <img src="screenshots/3_commits_split.png" alt="Git Commits Split">
   </div>
 
-  <div class="section-title">4. TypeScript Clean Compilation & Production Build Verification</div>
+  <div class="section-title" style="margin-top: 8px;">3. TypeScript Clean Compilation & Production Build Verification</div>
   <div class="screenshot-card" style="background: #0f172a; border-color: #334155; padding: 6px;">
     <img src="screenshots/4_tsc_passing.png" alt="TSC Passing in Terminal">
   </div>
