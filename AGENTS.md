@@ -4,3 +4,4 @@
 - Styling: Tailwind CSS utility classes + cn()
 - Icons: Use lucide-react exclusively
 - State: Immutable updates only (prev => ...)
+- Deliverables: Always put all deliverables, screenshots, and submission outputs directly into README.md
